@@ -13,10 +13,11 @@ class AppController extends Controller
     public function user_public_profile_page($id) {
         $user = User::find($id);
 
-        $fundraisings = Fundraising::where('foundator_id', '=', $user->id)->get();
+        $fundraisings = Fundraising::where('foundator_id', '=', $user->id)->get()->sortByDesc('id');
         $messages = Message::where('chat_id', '=', $id)->get();
-        
-        return view('profile.user-public-profile-page', ['user' => $user, 'fundraisings' => $fundraisings, 'messages' => $messages, 'chat_id' => $id]);
+        $fundraisings_count = $fundraisings->count();
+
+        return view('profile.user-public-profile-page', ['user' => $user, 'fundraisings' => $fundraisings, 'messages' => $messages, 'chat_id' => $id, 'fundraisings_count' => $fundraisings_count]);
     }
 
     public function chat_send_message(Request $req, $id) {
