@@ -37,12 +37,16 @@ Route::middleware([
 
     // * Збори коштів
     Route::get('/fundraisings', 'App\Http\Controllers\FundraisingController@fundraisingsView')->name('fundraisings');
-    
+    Route::post('/fundraising/create', 'App\Http\Controllers\FundraisingController@fundraisingCreate')->name('fundraisingCreate');
+    Route::post('/fundraising/delete/{id}', 'App\Http\Controllers\FundraisingController@fundraisingDelete')->name('fundraisingDelete');
+
     // TODO Профіль користувача з відкритим статусом || Доробити перевірку на статус профілю ( відкритий та закритий, якщо закритий - не показувати сторінку ) 
     Route::get('/profile/{id}', 'App\Http\Controllers\AppController@user_public_profile_page')->name('user_public_profile_page');
-    
+
     // * Повідомлення
     Route::post('/profile/{id}', 'App\Http\Controllers\AppController@chat_send_message')->name('chat_send_message');
+
+    Route::get('/chat/{profile_id}{chat_id}', 'App\Http\Controllers\AppController@chatView')->name('chat');
 
     // * Пошук
     Route::get('/search', function () {
